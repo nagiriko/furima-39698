@@ -7,11 +7,13 @@
 | Column             | Type   | Options     |
 | ------------------ | ------ | ----------- |
 | nickname           | string | null: false |
-| name               | string | null: false |
-| kana_name          | string | null: false |
+| last_name          | string | null: false |
+| first_name         | string | null: false |
+| last_name_kana     | string | null: false |
+| first_name_kana    | string | null: false |
 | email              | string | null: false |
 | encrypted_password | string | null: false |
-| birthdate          | text   | null: false |
+| birthdate          | date   | null: false |
 
 
 ### Association
@@ -21,43 +23,58 @@
 
 ## item テーブル
 
-| Column               | Type       | Options     |
-| -------------------- | ---------- | ----------- |
-| image                | string     | null: false |
-| name                 | text       | null: false |
-| description          | text       | null: false |
-| condition            | references | null: false |
-| shipping_fee         | string     | null: false |
-| prefecture           | text       | null: false |
-| shipping_duration    | text       | null: false |
-| price                | references | null: false |
-| user                 | references | null: false |
+| Column               | Type       | Options                        |
+| -------------------- | ---------- | ------------------------------ |
+| name                 | string     | null: false                    |
+| description          | text       | null: false                    |
+| condition_id         | references | null: false                    |
+| shipping_fee         | references | null: false                    |
+| prefecture_id        | references | null: false                    |
+| shipping_duration_id | references | null: false                    |
+| price                | string     | null: false                    |
+| user                 | references | null: false, foreign_key: true |
 
 
 ### Association
 
-- belongs_to :users
-- has_one :orders
+- belongs_to :user
+- has_one :order
+
 
 ## orders テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
-| card_info          | text       |                                |
-| expiration_date    | references | null: false, foreign_key: true |
-| security_code      | references | null: false, foreign_key: true |
-| postal_code        | text       |                                |
-| prefecture         | references | null: false, foreign_key: true |
-| city               | references | null: false, foreign_key: true |
-| address            | text       |                                |
-| building_name      | references | null: false, foreign_key: true |
-| phone_number       | references | null: false, foreign_key: true |
-| item               | references | null: false, foreign_key: true |
+| item_id            | references | null: false, foreign_key: true |
+| Addresses_id       | references | null: false                    |
+| purchase_date      | date       | null: false                    |
+
 
 
 ### Association
 
-- belongs_to :items
+- belongs_to :item
+- has_one :Address
+
+
+## Addresses テーブル
+
+| Column             | Type       | Options                        |
+| ------------------ | ---------- | ------------------------------ |
+| postal_code        | string     |                                |
+| prefecture         | text       | null: false, foreign_key: true |
+| city               | text       | null: false, foreign_key: true |
+| address            | text       |                                |
+| building_name      | string     | null: false, foreign_key: true |
+| phone_number       | string     | null: false, foreign_key: true |
+| item_id            | references | null: false, foreign_key: true |
+
+
+### Association
+
+- belongs_to :order
+
+
 
 
 
