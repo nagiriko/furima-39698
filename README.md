@@ -4,34 +4,37 @@
 
 ## users テーブル
 
-| Column             | Type   | Options     |
-| ------------------ | ------ | ----------- |
-| nickname           | string | null: false |
-| last_name          | string | null: false |
-| first_name         | string | null: false |
-| last_name_kana     | string | null: false |
-| first_name_kana    | string | null: false |
-| email              | string | null: false |
-| encrypted_password | string | null: false |
-| birthdate          | date   | null: false |
+| Column             | Type   | Options                  |
+| ------------------ | ------ | -----------              |
+| nickname           | string | null: false              |
+| last_name          | string | null: false              |
+| first_name         | string | null: false              |
+| last_name_kana     | string | null: false              |
+| first_name_kana    | string | null: false              |
+| email              | string | null: false, PRIMARY KEY |
+| encrypted_password | string | null: false              |
+| birthdate          | date   | null: false              |
 
 
 ### Association
 
 - has_many :items
+- has_many :orders
+- has_one :address
 
 
-## item テーブル
+## items テーブル
 
 | Column               | Type       | Options                        |
 | -------------------- | ---------- | ------------------------------ |
 | name                 | string     | null: false                    |
 | description          | text       | null: false                    |
+| category_id          | references | null: false                    |
 | condition_id         | references | null: false                    |
 | shipping_fee         | references | null: false                    |
 | prefecture_id        | references | null: false                    |
 | shipping_duration_id | references | null: false                    |
-| price                | string     | null: false                    |
+| price                | integer    | null: false                    |
 | user                 | references | null: false, foreign_key: true |
 
 
@@ -45,34 +48,34 @@
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
-| item_id            | references | null: false, foreign_key: true |
-| Addresses_id       | references | null: false                    |
-| purchase_date      | date       | null: false                    |
+| user               | references | null: false, foreign_key: true |
+| item               | references | null: false, foreign_key: true |
 
 
 
 ### Association
 
 - belongs_to :item
-- has_one :Address
+- belongs_to :user
 
 
-## Addresses テーブル
+## addresses テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
-| postal_code        | string     |                                |
-| prefecture         | text       | null: false, foreign_key: true |
-| city               | text       | null: false, foreign_key: true |
-| address            | text       |                                |
-| building_name      | string     | null: false, foreign_key: true |
-| phone_number       | string     | null: false, foreign_key: true |
-| item_id            | references | null: false, foreign_key: true |
+| postalCode         | string     | null: false                    |
+| prefecture_id      | text       | null: false                    |
+| city               | string     | null: false                    |
+| address            | string     | null: false                    |
+| building_name      | string     | null: false                    |
+| phone_number       | string     | null: false                    |
+| order              | references | null: false, foreign_key: true |
+| user               | references | null: false, foreign_key: true |
 
 
 ### Association
 
-- belongs_to :order
+- belongs_to :user
 
 
 
