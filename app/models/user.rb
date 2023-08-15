@@ -10,8 +10,8 @@ class User < ApplicationRecord
   validates :password, format: { with: VALID_PASSWORD_REGEX }
   validates :last_name,                 presence: true, format: { with: /\A[ぁ-んァ-ン一-龥々ーヶ]+\z/ }
   validates :first_name,                presence: true, format: { with: /\A[ぁ-んァ-ン一-龥々ーヶ]+\z/ }
-  validates :last_name_kana,            presence: true, format: { with: /\A[ァ-ンー－]+\z/ }
-  validates :first_name_kana,           presence: true, format: { with: /\A[ァ-ンー－]+\z/ }
+  validates :last_name_kana,            presence: true, format: { with: /\A[ァ-ヶー]+\z/ }
+  validates :first_name_kana,           presence: true, format: { with: /\A[ァ-ヶー]+\z/ }
   validates :birthdate,                 presence: true
   # has_many :items
   # has_many :orders
