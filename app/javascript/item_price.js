@@ -6,8 +6,8 @@ function tax() {
   itemPrice.addEventListener('input', () => {
     const fee = itemPrice.value * 0.1;
     const salesProfit = itemPrice.value - fee;
-    addTaxPrice.textContent = `${fee.toFixed(0)}`;
-    profit.textContent = `${salesProfit.toFixed(0)}`;
+    addTaxPrice.textContent = `${Math.floor(fee)}`;
+    profit.textContent = `${Math.floor(salesProfit)}`;
   });
 }
 
