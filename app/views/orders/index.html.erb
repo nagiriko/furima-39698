@@ -70,10 +70,9 @@
     <%# /カード情報の入力 %>
     
     <%# 配送先の入力 %>
-    <%= form_with(model: @order_address, url: item_orders_path, data: { turbo: false }, local: true ) do |f| %>
-    
+    <%= form_with model: @order_address, url: order_addresses_path, data: { turbo: false }, local: true do |f| %>
+    <%= render 'shared/error_messages', model: f.object %>
 
-      <%= render 'shared/error_messages', model: f.object %>
 
     <div class='shipping-address-form'>
       <h1 class='info-input-haedline'>
