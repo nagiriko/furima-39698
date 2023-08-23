@@ -33,7 +33,7 @@ def show
 end
 
 def edit
-  if @item.user == current_user
+  if current_user.id == @item.user.id && !@item.order
   else
     redirect_to root_path
   end
