@@ -1,11 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe OrderAddress, type: :model do
-  before do
-    @order_address = FactoryBot.build( :order_address)
-  end
 
-  describe '商品購入記録の保存' do
+  describe '配送先情報の保存' do
+    before do
+      item = FactoryBot.create(:item)
+      user = FactoryBot.create(:user)
+      @order_address = FactoryBot.build(:order_address,item_id: item.id,user_id: user.id)
+    end
+
     context '内容に問題ない場合' do
       it 'すべての値が正しく入力されていれば購入できること' do
         expect(@order_address).to be_valid
@@ -30,7 +33,7 @@ RSpec.describe OrderAddress, type: :model do
       end
       
       it '都道府県が選択されていなければ保存できないこと' do
-        @order_address.prefecture_id = nil
+        @order_address.prefecture_id =  1 
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Prefecture can't be blank")
       end
@@ -53,8 +56,14 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address.errors.full_messages).to include("Phone number can't be blank")
       end
 
-      it '電話番号が10桁以上11桁以内の半角数値でないと保存できないこと' do
-        @order_address.phone_number = '090-1234-5678'
+      it '電話番号が9桁以下の場合保存できないこと' do
+        @order_address.phone_number = '090123456'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it '電話番号が12桁以上の場合保存できないこと' do
+        @order_address.phone_number = '09012345678910'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Phone number is invalid")
       end
