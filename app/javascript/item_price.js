@@ -4,11 +4,15 @@ function tax() {
   const profit = document.getElementById("profit");
 
   itemPrice.addEventListener('input', () => {
-    const fee = itemPrice.value * 0.1;
-    const salesProfit = itemPrice.value - fee;
-    addTaxPrice.textContent = `${Math.floor(fee)}`;
-    profit.textContent = `${Math.floor(salesProfit)}`;
+    const price = parseInt(itemPrice.value);
+    const fee = Math.floor(price * 0.1);
+    const salesProfit = price - fee;
+    addTaxPrice.textContent = fee;
+    profit.textContent =  Math.ceil(price * 0.9.toLocaleString());
+    // profit.textContent = salesProfit + fee;
   });
 }
 
-window.addEventListener('load', tax);
+window.addEventListener('turbo:load', tax);
+
+console.log("test2")
